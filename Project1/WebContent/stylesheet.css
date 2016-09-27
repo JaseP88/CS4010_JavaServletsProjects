@@ -1,0 +1,79 @@
+/*
+Div position and style
+*/
+#background {
+
+ 	position:fixed;
+    top: 30%;
+   	left: 26%;
+    width: 79%;
+    height: 85%;
+    margin-top: -9em; 
+    margin-left: -15em; 
+    border: 1px solid #ccceff;
+    background-color: #f3f3f3;
+    overflow-y: auto;
+}
+
+#buttonDiv {
+    position:fixed;
+    top: 30%;
+    left: 26%;
+    width: 79%;
+    height: 85%;
+    margin-top: -9em; 
+    margin-left: -15em; 
+}
+
+/*
+textBox styling
+*/
+
+#textBox {
+ 	/*position: absolute;*/
+    /*top: 15%;*/
+   	/*left: 28%;*/
+    width: 20%;
+    height: 3em;
+    /*margin-top: -2em;*/
+    /*margin-left: -20em;*/ 
+    border: 1px solid #ccc;
+    background-color: #FFFFFF;
+    padding-left: 2em;
+    -webkit-transition: width 0.4s ease-in-out;
+    transition: width 0.4s ease-in-out;
+}
+
+/*
+animate textbox
+*/
+#textBox:focus {
+	width: 50%;
+}
+
+
+/* button styling */
+
+#urlButton {
+	position: absolute;
+	top: 15%;
+	right: 15%;
+	width: 8em;
+	height: 3em;
+	margin-top: -2em; /*set to a negative number 1/2 of your height*/
+    margin-left: -20em; /*set to a negative number 1/2 of your width*/
+	background-color: red;
+	font-size: 12pt;
+	color: white;
+}
+
+#submitButton{
+	position: absolute;
+	bottom: 10%;
+	right: 15%;
+	width: 8em;
+	height: 3em;
+	background-color: blue;
+	font-size: 12pt;
+	color: white;
+}
