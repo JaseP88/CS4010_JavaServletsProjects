@@ -2,6 +2,9 @@
 
 import java.io.IOException;
 import java.io.PrintWriter;
+
+import javax.servlet.*;
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
@@ -55,36 +58,55 @@ public class ReadURLServlet extends HttpServlet {
 		out.close();
 	*/
 
-
-		
-		String title;
-		String pattern = ".*<title>.*"; // look for title string
-		
-		String [] urlArray = request.getParameterValues("urlname");
 		
 		try {
 			
-			String urlName = "http://horstmann.com";
-			URL url = new URL(urlName);
-			URLConnection connection = url.openConnection();
+			int num_of_title = 50;
+			String title;
+			String pattern = ".*<title>.*"; // look for title string
 			
-			connection.connect();
+			String [] urlArray = request.getParameterValues("urlname");
+			String [] titleArray = new String[num_of_title];
 			
-			Scanner scanner = new Scanner(connection.getInputStream());
-			
-			while (scanner.hasNextLine()) {
-			
-				String match = scanner.next(); //read the next word and set to string
+			for (int i=0; i<urlArray.length; i++) {
 				
-				if (Pattern.matches(pattern, match)) { //compare the string to the pattern
-	
-					title = match + scanner.nextLine(); //concatenate the string to the rest of string in the line
-					System.out.println(title);
-					scanner.close();
-					break;
+				String urlName = urlArray[i];
+				URL url = new URL(urlName);
+				URLConnection connection = url.openConnection();
+				
+				connection.connect();
+				
+				Scanner scanner = new Scanner(connection.getInputStream());;
+				
+				while (scanner.hasNextLine()) {
+					String match = scanner.next();
+					
+					if (Pattern.matches(pattern,  match)) {
+						
+						title = match+scanner.nextLine();
+						titleArray[i] = title;
+						
+						//System.out.println(title);
+						scanner.close();
+						break;
+					}
 				}
 			}
 			
+			/*
+			for (int i=0; i<titleArray.length; i++) {
+				if(titleArray[i] == null)	
+					break;
+				else
+					System.out.println(titleArray[i]);
+			}
+			*/
+			
+			
+			request.setAttribute("titles", titleArray);
+			RequestDispatcher view = request.getRequestDispatcher("result.jsp");
+			
+			view.forward(request, response);		
 		} 
 		
 		catch (IOException e) {
