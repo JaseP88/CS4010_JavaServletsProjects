@@ -1,25 +1,29 @@
-<%@ page language="java"%>
+<%@ page import="java.util.*" %>
+
 
 <!DOCTYPE html>
 <html>
 
 	<head>
 		<title>Title Result</title>
-		<meta charset="utf-8" />
+		
 	</head>
 
 	<body>
-		
+	
 		<%
-			String [] title = (String [])request.getAttribute("titles");
-			String word = title[0];
-			//for (int i=0; i<title.length; i++)
-			System.out.println(title[0]);
+			ArrayList<String> titleList = (ArrayList)request.getAttribute("titles");
+			Iterator<String> itr = titleList.iterator();
+        	
 			
-			out.println(word);
+			while (itr.hasNext()) {
+        		String element = (String)itr.next();
+        		//System.out.println(element);
+        		String s = element+"<br>";
+        		out.println(s);
+        	}
 		%>
 	
-
 
 	</body>
 

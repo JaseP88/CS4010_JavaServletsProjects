@@ -44,29 +44,14 @@ public class ReadURLServlet extends HttpServlet {
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse response)
 	 */
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-		/*
-		String [] url = request.getParameterValues("urlname");
-		
-
-		response.setContentType("text/html");
-		PrintWriter out = response.getWriter();
-		
-		for(int i=0; i<url.length; i++)
-			out.println("<h1>hey</h1>" + url[i]);
-		
-		out.close();
-	*/
-
 		
 		try {
 			
-			int num_of_title = 50;
 			String title;
 			String pattern = ".*<title>.*"; // look for title string
 			
 			String [] urlArray = request.getParameterValues("urlname");
-			String [] titleArray = new String[num_of_title];
+			ArrayList <String>titleArray = new ArrayList <String> ();	//to hold all the titles
 			
 			for (int i=0; i<urlArray.length; i++) {
 				
@@ -84,29 +69,25 @@ public class ReadURLServlet extends HttpServlet {
 					if (Pattern.matches(pattern,  match)) {
 						
 						title = match+scanner.nextLine();
-						titleArray[i] = title;
+						
+			
+						//System.out.println(title);
+						title = title.replaceAll("\\<", "").replaceAll("\\>"," ");	//replace brackets to not affect the DOM
+						//System.out.println(title);
+						
+						titleArray.add(title);
 						
 						//System.out.println(title);
-						scanner.close();
 						break;
 					}
 				}
+				scanner.close();
 			}
-			
-			/*
-			for (int i=0; i<titleArray.length; i++) {
-				if(titleArray[i] == null)	
-					break;
-				else
-					System.out.println(titleArray[i]);
-			}
-			*/
-			
 			
 			request.setAttribute("titles", titleArray);
 			RequestDispatcher view = request.getRequestDispatcher("result.jsp");
 			
-			view.forward(request, response);		
+			view.forward(request, response);
 		} 
 		
 		catch (IOException e) {
