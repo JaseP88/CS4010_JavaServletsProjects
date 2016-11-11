@@ -27,7 +27,25 @@ public class GetQuestionServlet extends HttpServlet {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/proj2db","root","root");
+			Statement stmt = connection.createStatement();
 
+			/* Create the table if none exists */
+			stmt.execute("CREATE TABLE IF NOT EXISTS questions (id int NOT NULL AUTO_INCREMENT," +
+				"question varchar (30) NOT NULL," +
+				"PRIMARY KEY (id));" 
+			);
+
+			stmt.execute("CREATE TABLE IF NOT EXISTS keywords (id int NOT NULL AUTO_INCREMENT," +
+				"keyword varchar (30) NOT NULL," +
+				"PRIMARY KEY (id));"
+			);
+
+			stmt.execute("CREATE TABLE IF NOT EXISTS mappings (id int NOT NULL AUTO_INCREMENT," +
+				"Kid int NOT NULL," + "Qid int NOT NULL,"+
+				"PRIMARY KEY (id));"
+			);
+
+			stmt.close();
 			results = connection.prepareStatement("SELECT question, id " + "FROM questions ORDER by id");
 		}
 		catch (Exception exception) {
