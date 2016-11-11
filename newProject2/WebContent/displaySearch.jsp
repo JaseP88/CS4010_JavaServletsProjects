@@ -18,9 +18,6 @@
                 <c:forEach var="theQuestions" items="${myQuestions}">
                     <tr>
                         <td><c:out value="${theQuestions}" /></td>
-                        <td><input type="text" id="keywordtext" name="keyword" placeholder="Add Keyword"/>
-                            <button type="submit" value="Submit">Add Keyword</button>
-                        </td>
                     </tr>
                 </c:forEach>
             </table>
