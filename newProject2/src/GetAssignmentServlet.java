@@ -1,5 +1,5 @@
 import java.util.*;
-import java.sql.SQLException;
+
 import javax.servlet.RequestDispatcher;
 import javax.servlet.UnavailableException;
 import java.sql.*;
@@ -13,37 +13,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 /**
- * Servlet implementation class GetQuestionServlet
+ * Servlet implementation class GetAssignmentServlet
  */
-@WebServlet("/GetQuestionServlet")
-public class GetQuestionServlet extends HttpServlet {
+@WebServlet("/GetAssignmentServlet")
+public class GetAssignmentServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
-    private Connection connection;
+	private Connection connection;
 	private PreparedStatement results;
- 
-
-	// Set up the database connection
+       
+    
 	public void init(ServletConfig config) throws ServletException {
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 			connection = DriverManager.getConnection("jdbc:mysql://localhost:8889/proj2db","root","root");
+			
+			/*
 			Statement stmt = connection.createStatement();
-
-			/* Create the table if none exists */
-			stmt.execute("CREATE TABLE IF NOT EXISTS questions (id int NOT NULL AUTO_INCREMENT," +
-				"question varchar (30) NOT NULL," +
-				"PRIMARY KEY (id));" 
-			);
-
-			stmt.execute("CREATE TABLE IF NOT EXISTS keywords (id int NOT NULL AUTO_INCREMENT," +
-				"keyword varchar (30) NOT NULL," +
-				"PRIMARY KEY (id));"
-			);
-
-			stmt.execute("CREATE TABLE IF NOT EXISTS mappings (id int NOT NULL AUTO_INCREMENT," +
-				"Kid int NOT NULL," + "Qid int NOT NULL,"+
-				"PRIMARY KEY (id));"
-			);
+			
 			
 			stmt.execute("CREATE TABLE IF NOT EXISTS assignmentTable (" +
 					"id int NOT NULL AUTO_INCREMENT," +
@@ -57,17 +43,16 @@ public class GetQuestionServlet extends HttpServlet {
 					"Aid int NOT NULL," +
 					"PRIMARY KEY (id) );"
 			);
-
-			stmt.close();
-			results = connection.prepareStatement("SELECT question, id " + "FROM questions ORDER by id");
+			*/
+			results = connection.prepareStatement("SELECT title, id " + "FROM assignmentTable ORDER by id");
 		}
+		
 		catch (Exception exception) {
 			exception.printStackTrace();
 			throw new UnavailableException(exception.getMessage());
 		}
 	}
-
-	// Cut connection
+	
 	public void destroy() {
 		try {
 			results.close();
@@ -86,23 +71,23 @@ public class GetQuestionServlet extends HttpServlet {
 
 	
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		
 		try {
 			ResultSet resultsRS = results.executeQuery();
-			ArrayList <String>questionArr = new ArrayList <String> ();
+			ArrayList <String>titleArray = new ArrayList <String> ();
 			while (resultsRS.next()) {
-				questionArr.add(resultsRS.getString(1));
+				titleArray.add(resultsRS.getString(1));
 			}
 			resultsRS.close();
-
-			//System.out.println(questionArr.get(0));
-			request.setAttribute("myQuestions",questionArr);
-			RequestDispatcher view = request.getRequestDispatcher("displayQuestion.jsp");
+			
+			request.setAttribute("myTitle",titleArray);
+			RequestDispatcher view = request.getRequestDispatcher("displayTitle.jsp");
 			view.forward(request,response);
 		}
 
 		catch(SQLException sqlException) {
 			sqlException.printStackTrace();
-		}
+		}		
 	}
 
 }

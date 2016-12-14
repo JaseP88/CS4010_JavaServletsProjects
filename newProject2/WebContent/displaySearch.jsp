@@ -13,11 +13,21 @@
             </form>
         </div>
 
+		<h1> Current Assignment: <c:out value="${sessiontitle}" default="N/A" ></c:out></h1>
+		<form method="POST" action="GetAssignmentServlet" >
+			<button type="submit">Change Assignment</button>
+		</form>
+
         <div id="displayQ">
             <table>
                 <c:forEach var="theQuestions" items="${myQuestions}">
                     <tr>
-                        <td><c:out value="${theQuestions}" /></td>
+                    	<form method="POST" action="MapQuestionToAssignmentServlet" >
+                    		<input type="hidden" name="questionparam" value="${theQuestions}" />
+                    		<input type="hidden" name="sessionparam" value="${sessiontitle}" />
+                        	<td><c:out value="${theQuestions}" /></td>
+                        	<td><button type="submit">Add to Assignment</button></td>
+                        </form>
                     </tr>
                 </c:forEach>
             </table>

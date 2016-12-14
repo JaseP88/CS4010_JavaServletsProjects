@@ -7,6 +7,8 @@
     </head>
 
     <body>
+    	<h1> DISPLAY QUESTION </h1>
+    	<h1> Current Assignment: <c:out value="${sessiontitle}" default="N/A" ></c:out></h1>
         <form id="addQuestionForm" method="POST" action="UpdateQuestionServlet">
             <div id="textarea">
                 <textarea name="textArea" placeholder="Enter question and click add button to add it to Database"></textarea>
@@ -35,5 +37,10 @@
                 <button type="submit" value="Submit">Find</button>
             </div>
         </form>
+        <form id="getAssignmentForm" method="POST" action="GetAssignmentServlet" >
+    		<div id="buttondiv">
+    			<button type="submit" form="getAssignmentForm" value="Submit">ASSIGNMENT</button>
+    		</div>
+    	</form>
     </body>
 </html>
