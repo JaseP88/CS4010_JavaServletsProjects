@@ -1,0 +1,6 @@
+Web App project utilizing mysql database and Java Servlets
+
+Goal:
+Create math questions that can be linked with a keyword.
+Keywords can then be searched and the question in the keywords be added into an assignment
+Create assignments and can view questions that are in that assignment or select it for use
